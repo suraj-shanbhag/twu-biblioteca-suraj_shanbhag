@@ -26,38 +26,109 @@ public class BibliotecaApp {
             available_list.add(newBook);
         }
     }
+    private static void Checkout(){
+        while(true){
+            Boolean valid=false;
+            System.out.format("%s%24s%32s%45s","Book id","Name","Author","Year Of Publication\n");
+            System.out.println("======================================================================================================================");
+
+            for(Book b: available_list){
+                System.out.format("%3s%32s%32s%32s\n",String.valueOf(b.getBook_id()),b.getTitle(),b.getAuthor(),b.getYear_published());
+            }
+            System.out.println("Enter The Book ID You Want To Check Out ---OR--- Enter 0 to Go Back!");
+            Scanner checkout = new Scanner(System.in);
+            int checkout_choice = checkout.nextInt();
+            if(checkout_choice!=0){
+                for(Book b : available_list){
+                    if(Integer.valueOf(b.getBook_id()).equals(checkout_choice)){
+                        available_list.remove(b);
+                        toReturn_list.add(b);
+                        System.out.println("Thank you! Enjoy the book");
+                        valid=true;
+                        break;
+                    }
+                }
+                if(!valid){
+                    System.out.println("That book is not available.");
+                }
+            }else{
+                return;
+            }
+        }
+    }
+    private static void Return(){
+        while(true){
+            Boolean valid=false;
+            System.out.println("\nBooks Yet To Return\n");
+            System.out.format("%s%24s%32s%45s","Book id","Name","Author","Year Of Publication\n");
+            System.out.println("======================================================================================================================");
+            for(Book b: toReturn_list){
+                System.out.format("%3s%32s%32s%32s\n",String.valueOf(b.getBook_id()),b.getTitle(),b.getAuthor(),b.getYear_published());
+            }
+            System.out.println("\nEnter The Book ID You Want To Return ---OR--- Enter 0 to Go Back!");
+            Scanner ret_scan=new Scanner(System.in);
+            int return_choice = ret_scan.nextInt();
+            if(return_choice!=0){
+                for(Book b : toReturn_list){
+                    if(Integer.valueOf(b.getBook_id()).equals(return_choice)){
+                        available_list.add(b);
+                        toReturn_list.remove(b);
+                        System.out.println("Thank you for returning the book.");
+                        valid=true;
+                        break;
+                    }
+                }
+                if(!valid){
+                    System.out.println("That is not a valid book to return.");
+                }
+            }else{
+                return;
+            }
+        }
+    }
+    public static void clear(){
+        //Used this way of clearing as the other ways dont work in IDEA console(As much i know!)
+        for(int i=0;i<200;i++){
+            System.out.println("");
+        }
+    }
+    public static void ViewList(){
+        while(true){
+            clear();
+            System.out.format("%s%24s%32s%45s","Book id","Name","Author","Year Of Publication\n");
+            System.out.println("======================================================================================================================");
+            for(Book b: available_list){
+                System.out.format("%3s%32s%32s%32s\n",String.valueOf(b.getBook_id()),b.getTitle(),b.getAuthor(),b.getYear_published());
+            }
+            System.out.println("Enter 0 to Go Back!");
+            Scanner ret_scan=new Scanner(System.in);
+            int return_choice = ret_scan.nextInt();
+            if(return_choice==0){
+                return;
+            }
+        }
+
+    }
     public static void main(String[] args) {
         LibrarySetup();
+        System.out.println("Welcome to The Bangalore Public Library");
         while(true){
+            clear();
             System.out.println("1: View Available Books \n2: Checkout a Book \n3: Return a Book\n4: Exit");
             Scanner reader = new Scanner(System.in);  // Reading from System.in
             System.out.print("Enter Your Choice: ");
             int choice = reader.nextInt();
             switch (choice){
                 case 1:
-                    System.out.println("Book id , Name,Author , Year Of Publication");
-                    for(Book b: available_list){
-                        System.out.println(String.valueOf(b.getBook_id())+" , "+b.getTitle()+" , "+b.getAuthor()+" , "+b.getYear_published());
-                    }
+                    ViewList();
                     break;
                 case 2:
-                    System.out.println("Book id , Name , Author , Year Of Publication");
-                    for(Book b: available_list){
-                        System.out.println(String.valueOf(b.getBook_id())+" , "+b.getTitle()+" , "+b.getAuthor()+" , "+b.getYear_published());
-                    }
-                    System.out.println("Enter The Book ID You Want To Check Out");
-                    Scanner checkout = new Scanner(System.in);
-                    int checkout_choice = checkout.nextInt();
-                    for(Book b : available_list){
-                        if(Integer.valueOf(b.getBook_id()).equals(checkout_choice)){
-                            available_list.remove(b);
-                            toReturn_list.add(b);
-                            break;
-                        }
-                    }
+                    clear();
+                    Checkout();
                     break;
                 case 3:
-                    System.out.println("3");
+                    clear();
+                    Return();
                     break;
                 case 4:
                     System.exit(0);
