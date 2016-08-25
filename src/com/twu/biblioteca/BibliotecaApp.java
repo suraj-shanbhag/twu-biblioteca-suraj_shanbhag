@@ -22,7 +22,12 @@ public class BibliotecaApp {
             "2,Airplane,Katherine Cumburtin,2011,8",
             "3,The Pestige,Christopher Nolan,2006,9",
             "4,World War Z,David Cross,2012,6",
-            "5,Kingsman Secret Service,Fred Robertson,2010,7"
+            "5,Kingsman Secret Service,Fred Robertson,2010,7",
+            "6,Titanic,James Cameron,1998,9",
+            "7,Fight Club,Oliver Forest,2000,8",
+            "8,Sulthan,Abbas Khan,2016,8",
+            "9,Prem Ratan Dhan Payo,Suraj Barjatiya,2015,2",
+            "10,pk,Rajkumar Hirani,2014,8"
     };
     public static String[] member_list={
             "1q2-qw3e,Mauro Hunt,maurohunt@hotmail.com,Wall street,65372651,hunt123",
@@ -166,7 +171,7 @@ public class BibliotecaApp {
         for(Member m:memberArrayList){
             if((user.equals(m.getMember_id()))&&(password.equals(m.getPassword()))){
                 clear();
-                System.out.format("%s%32s%32s%32s\n","Name","Email","Address","Phone Number");
+                System.out.format("%s%32s%36s%36s\n","Name","Email","Address","Phone Number");
                 System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------");
                 System.out.format("%s%32s%32s%32s\n",m.getName(),m.getEmail(),m.getAddress(),m.getPhone_number());
                 System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------");
@@ -326,12 +331,37 @@ public class BibliotecaApp {
             }
         }
     }
-
+    public static void Initial(){
+        while(true){
+            System.out.println("Which one of these are you intrested in ?\n1: Books\n2: Movies\n3: Log Out\n4: Exit\n");
+            Scanner interest=new Scanner(System.in);
+            while (!interest.hasNextInt()) interest.next();
+            int interest_choice=interest.nextInt();
+            switch (interest_choice){
+                case 1:
+                    Books();
+                    break;
+                case 2:
+                    Movies();
+                    break;
+                case 3:
+                    clear();
+                    return;
+                case 4:
+                    System.out.println("THANK YOU...VISIT AGAIN !");
+                    System.exit(0);
+                default:
+                    clear();
+                    System.out.print("\t\t\t\t\tEnter a Valid Choice!!\n\n\n\n\n");
+                    sleepFor2sec();
+            }
+        }
+    }
     public static void main(String[] args) {
         LibrarySetup();
         MovieSetup();
         MemberSetup();
-        System.out.println("Welcome to The Bangalore Public Library\n\n");
+        System.out.println("WELCOME TO THE BANGALORE PUBLIC LIBRARY\n\n");
         while(true){
             System.out.println("Enter User Credentials\n");
             System.out.print("User id:");
@@ -341,26 +371,7 @@ public class BibliotecaApp {
             Scanner pass_scn = new Scanner(System.in);
             String password=pass_scn.next();
             if(MemberValidation(user,password)){
-                while(true){
-                    System.out.println("Which one of these are you intrested in ?\n1: Books\n2: Movies\n3: Exit");
-                    Scanner interest=new Scanner(System.in);
-                    while (!interest.hasNextInt()) interest.next();
-                    int interest_choice=interest.nextInt();
-                    switch (interest_choice){
-                        case 1:
-                            Books();
-                            break;
-                        case 2:
-                            Movies();
-                            break;
-                        case 3:
-                            System.exit(0);
-                        default:
-                            clear();
-                            System.out.print("\t\t\t\t\tEnter a Valid Choice!!\n\n\n\n\n");
-                            sleepFor2sec();
-                    }
-                }
+                Initial();
             }else {
                 clear();
                 System.out.println("\t\t\t\t\t\t\tIncorrect Login Or Password ...Try Again!\n\n\n\n\n\n\n");
